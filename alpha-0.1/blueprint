@@ -1,0 +1,40 @@
+Project: MENACER (the 'M'achine 'E'ducable 'N'oughts 'A'nd 'C'rosses 'E'ngine - Revived)
+Motto: I Challange You ...
+
+Step 1: List all possible unique configurations in "Noughts and Crosses" - considering rotated and/or mirrored versions equivalent.
+
+Rotated versions
+
+x|o| 	 | |
+ | | 	 | |
+ | | 	 |o|x
+
+xo. ... ... <=> ... ... .ox
+
+Mirrored versions
+
+x|o| 	 |o|x
+ | | 	 | | 
+ |x|o	o|x| 
+
+xo. ... .xo <=> .ox ... ox.
+
+Note: For each board configuration, consider it in standard form (rotation and mirror invariant form) and take action, and then translate action for current configuration.
+
+xo. ... ... <=> ..x ..o ... <=> ... ... .ox <=> ... o.. x.. <=>
+.ox ... ... <=> x.. o.. ... <=> ... ... xo. <=> ... ..o ..x
+
+
+I. How to Represent Configuration ?
+
+	x|o|x
+	 | | 
+	o|x|o
+
+	o string: xox...oxo
+	o array: [1, -1, 1, 0, 0, 0, -1, 1, -1]
+
+Usage: string variant is used as it can be used as a key for dictionary or added to a set.
+
+
+Step 2: Define a random policy and enable agent to play against human with the initial policy.
