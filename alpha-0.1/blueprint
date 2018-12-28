@@ -38,3 +38,9 @@ Usage: string variant is used as it can be used as a key for dictionary or added
 
 
 Step 2: Define a random policy and enable agent to play against human with the initial policy.
+
+Step 3: Create agents x and o, and allow agents to play against one another using random policies.
+
+Step 4: Initialize transition probabilities and rewards in the agents.
+
+Step 5: Look at the configurations of board and actions performed in a game and update MDP (transition probabilities and rewards).
