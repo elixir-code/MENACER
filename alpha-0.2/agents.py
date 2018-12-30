@@ -5,15 +5,16 @@ Author: R Mukesh (IIITDM Kancheepuram)
 """
 
 from board import isWinningBoardState, displayBoard
-from mdp import generateBoardStates, genRandomPolicy, getNextMove, initTransitionProbs, updateRewards, updateTransitionProbs
+from mdp import generateBoardStates, genRandomPolicy, getNextMove, initTransitionProbs, updateRewards, updateTransitionProbs, updatePolicy
 
 
 class AgentX:
 
-	def __init__(self, win_reward=1, loss_reward=-1):
+	def __init__(self, win_reward=3, loss_reward=-1, discount_factor=0.3):
 
 		self.win_reward = win_reward
 		self.loss_reward = loss_reward
+		self.discount_factor = discount_factor
 
 		# Generate the list of all possible states
 		self.board_states = generateBoardStates('x')
@@ -27,6 +28,9 @@ class AgentX:
 									if not(isWinningBoardState(board_state, 'x') or isWinningBoardState(board_state, 'o')) and board_state.find('.')>=0]
 		self.policy = genRandomPolicy(board_nonfinal_states)
 
+		# Initialise each state's value function
+		self.states_values = dict.fromkeys(self.board_states, 0)
+
 
 	def getNextMove(self, board):
 		'''Invoking the MENACER agent for next move based on its policy'''
@@ -39,14 +43,16 @@ class AgentX:
 
 		self.transition_probs = updateTransitionProbs('x', games, self.transition_probs)
 		self.rewards = updateRewards('x', games, self.rewards, self.win_reward, self.loss_reward)
+		self.policy = updatePolicy(self.board_states, self.states_values, self.policy, self.transition_probs, self.rewards, self.discount_factor)
 
 
 class AgentO:
 
-	def __init__(self, win_reward=1, loss_reward=-1):
+	def __init__(self, win_reward=3, loss_reward=-1, discount_factor=0.3):
 
 		self.win_reward = win_reward
 		self.loss_reward = loss_reward
+		self.discount_factor = discount_factor
 
 		# Generate the list of all possible states
 		self.board_states = generateBoardStates('o')
@@ -60,6 +66,9 @@ class AgentO:
 									if not(isWinningBoardState(board_state, 'x') or isWinningBoardState(board_state, 'o')) and board_state.find('.')>=0 ]
 		self.policy = genRandomPolicy(board_nonfinal_states)
 
+		# Initialise states value function
+		self.states_values = dict.fromkeys(self.board_states, 0)
+
 
 	def getNextMove(self, board):
 		'''Invoking the MENACER agent for next move based on its policy'''
@@ -72,6 +81,7 @@ class AgentO:
 
 		self.transition_probs = updateTransitionProbs('o', games, self.transition_probs)
 		self.rewards = updateRewards('o', games, self.rewards, self.win_reward, self.loss_reward)
+		self.policy = updatePolicy(self.board_states, self.states_values, self.policy, self.transition_probs, self.rewards, self.discount_factor)
 
 
 def playNoughtsCrosses(agentx, agento):
@@ -91,15 +101,29 @@ def playNoughtsCrosses(agentx, agento):
 
 		# MENACER's play
 		if player == 'x':
-			next_move = agentx.getNextMove(board)
-			game.append((board, next_move))
-			board = board[:next_move] + 'x' + board[next_move+1:]
+
+			if agentx == 'human':
+				next_move = int(input("Enter Next Move: ").strip())
+				while next_move not in range(9) or board[next_move]!='.':
+					next_move = int(input("Invalid Move. Enter Next Move: ").strip())
+
+			else:
+				next_move = agentx.getNextMove(board)
+
 
 		# Human's play
 		elif player == 'o':
-			next_move = agento.getNextMove(board)
-			game.append((board, next_move))
-			board = board[:next_move] + 'o' + board[next_move+1:]
+			
+			if agento == 'human':
+				next_move = int(input("Enter Next Move: ").strip())
+				while next_move not in range(9) or board[next_move]!='.':
+					next_move = int(input("Invalid Move. Enter Next Move: ").strip())
+
+			else:
+				next_move = agento.getNextMove(board)
+
+		game.append((board, next_move))
+		board = board[:next_move] + player + board[next_move+1:]
 
 		displayBoard(board)
 		print("Player '{}' plays move {}".format(player, next_move), end='\n\n')

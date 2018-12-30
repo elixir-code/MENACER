@@ -43,4 +43,6 @@ Step 3: Create agents x and o, and allow agents to play against one another usin
 
 Step 4: Initialize transition probabilities and rewards in the agents.
 
-Step 5: Look at the configurations of board and actions performed in a game and update MDP (transition probabilities and rewards).
+Step 5: Update the reward and transition probabilities using the states and actions in a game played.
+
+Step 6: Use value iteration algorithm to update policy based on updated transition probabilities.

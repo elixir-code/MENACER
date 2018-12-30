@@ -5,7 +5,7 @@ Author: R Mukesh (IIITDM Kancheepuram)
 """
 
 from board import standardForm, possibleNextStates, isWinningBoardState, stepsToStandardForm, translateMove
-
+from math import inf, isclose
 
 def generateBoardStates(player):
 	'''Generate all possible unique states of the board'''
@@ -157,3 +157,45 @@ def updateTransitionProbs(player, games, transition_probs):
 			transition_probs[standard_current_state][standard_next_move][standard_next_state] += 1
 
 	return transition_probs
+
+
+def updatePolicy(board_states, states_values, policy, transition_probs, states_rewards, discount_factor):
+	'''Update the policy based on estimated rewards and transition probabilities using value iteration algorithm'''
+
+	n_values_changed = True
+
+	while n_values_changed:
+
+		n_values_changed = 0
+
+		for current_board_state in board_states:
+
+			max_expected_payoff = -inf
+			max_payoff_action = None
+
+			# Determine action that maximizes pay off at current board state
+			for action in transition_probs.get(current_board_state, {}):
+				
+				expected_payoff = 0
+				for next_board_state in transition_probs[current_board_state][action]:
+					expected_payoff += transition_probs[current_board_state][action][next_board_state]*states_values[next_board_state]
+				expected_payoff /= sum(transition_probs[current_board_state][action].values())
+
+				if expected_payoff > max_expected_payoff:
+					max_expected_payoff = expected_payoff
+					max_payoff_action = action
+
+			if states_rewards[current_board_state][0] == 0:
+				avg_state_reward = 0
+
+			else:
+				avg_state_reward = states_rewards[current_board_state][1]/states_rewards[current_board_state][0]
+
+			state_value = avg_state_reward + discount_factor*(max_expected_payoff if max_payoff_action is not None else 0)
+
+			if not isclose(states_values[current_board_state], state_value, rel_tol=0.001, abs_tol=0.0):
+				policy[current_board_state] = max_payoff_action
+				states_values[current_board_state] = state_value
+				n_values_changed += 1
+
+	return policy
