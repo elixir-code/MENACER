@@ -160,7 +160,7 @@ def updateTransitionProbs(player, games, transition_probs):
 
 
 def updatePolicy(board_states, states_values, policy, transition_probs, states_rewards, discount_factor):
-	'''Update the policy based on estimated rewards and transition probabilities using value iteration algorithm'''
+	'''Update the policy (and implicitly state values) based on estimated rewards and transition probabilities using value iteration algorithm'''
 
 	n_values_changed = True
 

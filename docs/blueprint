@@ -46,3 +46,17 @@ Step 4: Initialize transition probabilities and rewards in the agents.
 Step 5: Update the reward and transition probabilities using the states and actions in a game played.
 
 Step 6: Use value iteration algorithm to update policy based on updated transition probabilities.
+
+II. Training the Noughts and Crosses Engine
+
+	Statergy 1 (Self Play): Allow nascent agents 'x' and 'o' to play against one another.
+
+	Statergy 2 (Human Train + Self play): Play some games with the agents, and let the pre-trained agents further learn by playing against themselves.
+
+	Statergy 3 (Human Train): Allow collaborators to download pre-trained agents and train by playing against it.
+
+	-----------------------------------------------------------------------------------------
+	| Important Note: 																		|
+	| 	o Request colloborators to upload games played as a dataset or serialised file.		|
+	|	o This allows to re-train debugged programs in future.								|
+	-----------------------------------------------------------------------------------------
