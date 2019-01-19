@@ -13,21 +13,44 @@ API Examples
 MENACER vs Human
 ----------------
 
-..	include:: ../examples/menacer-human.py
-	:start-line: 9
-	:literal:
-	:code: python
-	:encoding: us-ascii
+..	code:: python
+	
+	from menacer import AgentX, AgentO, playNoughtsCrosses
+
+	# Initialize MDP Agent that plays 'X' with random policy
+	agentx = AgentX()
+	agento = 'human'
+
+	while True:
+		# Simulate a game between agentx and agento
+		game = playNoughtsCrosses(agentx, agento)
+
+		# Update the MDP and policy of agentx to learn from game
+		agentx.learnGameplay([game])
 
 ------------------
 MENACER vs MENACER
 ------------------
 
-..	include:: ../examples/menacer-menacer.py
-	:start-line: 9
-	:literal:
-	:code: python
-	:encoding: us-ascii
+..	code:: python
+
+	from menacer import AgentX, AgentO, playNoughtsCrosses
+
+	# Initialize MDP Agents that plays 'X' and 'O' with random policies
+	agentx = AgentX()
+	agento = AgentO()
+
+	# Define the number games to be simulated
+	n_games = 1000
+
+	for i_game in range(n_games):
+
+		# Simulate a game between agentx and agento
+		game = playNoughtsCrosses(agentx, agento)
+
+		# Update the MDP and policy of agents to learn from game
+		agentx.learnGameplay([game])
+		agento.learnGameplay([game])
 
 --------------------------------------
 Dumping and Loading Pre-Trained Agents
