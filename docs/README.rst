@@ -6,6 +6,35 @@ MENACER: Machine Educable Noughts and Crosses Engine - Revived
 
 **MENACER** (``Machine Educable Noughts and Crosses Engine - Revived``) is a computer program that plays the game of Noughts and Crosses (aka. Tic-Tac-Toe). It learns, evolves and gets better at the game with every game it plays.
 
+API Examples
+============
+
+----------------
+MENACER vs Human
+----------------
+
+..	include:: ../examples/menacer-human.py
+	:start-line: 9
+	:literal:
+	:code: python
+	:encoding: us-ascii
+
+------------------
+MENACER vs MENACER
+------------------
+
+..	include:: ../examples/menacer-menacer.py
+	:start-line: 9
+	:literal:
+	:code: python
+	:encoding: us-ascii
+
+--------------------------------------
+Dumping and Loading Pre-Trained Agents
+--------------------------------------
+
+Pre-trained agents can be *serialized*, and dumped or loaded from binary files using the `pickle <https://docs.python.org/3/library/pickle.html>`_ library.
+
 How it Works
 ============
 
@@ -58,12 +87,23 @@ The use of the standard form of the board configurations to represent the states
 Representing Actions
 --------------------
 
-.. 	image:: static-assets/board-states.png
-	:height: 180 
-	:width: 180
+.. 	image:: static-assets/board-actions.png
 	:align: left
 
 .. End of image directive
 
 The various *next moves* (or positions) that an agent can play for a given board configuration correspond to **actions** that can be performed at the corresponding state in the MDP model.
 
+The possible actions that can be performed at a given state in the MDP models are encoded as a *subset of numbers enumerated from 0 to 8*, each corresponding to one of the nine possible positions in the board.
+
+
+Contributor's Section
+=====================
+
+The MENACER community encouages all its members to contribute to the project in however small ways possible.
+
+Some of the important milestones in the future roadmap of MENACER include:
+
++ **Creation of Website:** Since, large hours of training are necessary for the agents to capture the complete dynamics of the game and evolve to become expert players in the game of Noughts and Crosses, creation of a website where the users can play against MENACER is of primal focus.
+  
+Please refer to `issues <https://github.com/elixir-code/MENACER/issues>`_ section for related discussion and more information on possible directions of future work.

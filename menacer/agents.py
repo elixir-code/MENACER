@@ -4,8 +4,9 @@ MENACER ('M'achine 'E'ducable 'N'oughts 'a'nd 'C'rosses 'E'ngine - Revived)
 Author: R Mukesh (IIITDM Kancheepuram)
 """
 
-from board import isWinningBoardState, displayBoard
-from mdp import generateBoardStates, genRandomPolicy, getNextMove, initTransitionProbs, updateRewards, updateTransitionProbs, updatePolicy
+from .board import isWinningBoardState, displayBoard
+from .mdp import generateBoardStates, genRandomPolicy, getNextMove, initTransitionProbs, updateRewards, updateTransitionProbs, updatePolicy
+import pickle
 
 
 class AgentX:
@@ -87,6 +88,8 @@ class AgentO:
 def playNoughtsCrosses(agentx, agento):
 	'''Play a game of Noughts and Crosses using the given policy'''
 
+	print()
+
 	game = []
 
 	board = '.........'
@@ -130,11 +133,11 @@ def playNoughtsCrosses(agentx, agento):
 
 
 	if isWinningBoardState(board, player):
-		print("Player '{}' wins!".format(player))
+		print("*** Player '{}' wins! ***".format(player))
 		game.append((board, player))
 
 	else:
-		print("Match Draws ...")
+		print("*** Match Draws ***")
 		game.append((board, None))
 
 	return game

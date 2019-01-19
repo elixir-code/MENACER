@@ -4,7 +4,7 @@ MENACER ('M'achine 'E'ducable 'N'oughts 'a'nd 'C'rosses 'E'ngine - Revived)
 Author: R Mukesh (IIITDM Kancheepuram)
 """
 
-from board import standardForm, possibleNextStates, isWinningBoardState, stepsToStandardForm, translateMove
+from .board import standardForm, possibleNextStates, isWinningBoardState, stepsToStandardForm, translateMove
 from math import inf, isclose
 
 def generateBoardStates(player):
